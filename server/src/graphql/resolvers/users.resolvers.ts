@@ -1,6 +1,6 @@
 import { Query, Mutation, Resolver, Arg } from "type-graphql";
 import UserModel from "../../model/users.models";
-import { SignInInput, SignInResponse, UserInput, UserResponse } from "../schemas/users.schemas";
+import { SignInInput, SignInResponse, UserInput, UserResponse, UserResetInput, UserEditInput } from "../schemas/users.schemas";
 import { statusMessage } from "../../constants/message.constants";
 import { ApolloError } from "apollo-server-errors";
 import { comparingPassword, generateJWTAccessToken, hashingPassword } from "../../helpers/common.helpers";
@@ -16,6 +16,49 @@ export default class UserResolver {
         if (users.length < 1) throw new ApolloError(statusMessage(404));
 
         return users;
+    }
+
+    @Mutation(() => SignInResponse)
+    async sigInUser(@Arg("signInInput") signInInput: SignInInput): Promise<SignInResponse> {
+        const { phone, password } = signInInput;
+
+        const user = await UserModel.findOne({ phone });
+
+        if (!user) throw new ApolloError(statusMessage(422), "422");
+
+        const isPasswordVerified = await comparingPassword(password, user["password"]);
+
+        if (!isPasswordVerified) throw new ApolloError(statusMessage(422), "422");
+
+        const jwtAccessToken = generateJWTAccessToken(user.id);
+
+        return {
+            id: user.id,
+            phone: user["phone"],
+            token: jwtAccessToken,
+        };
+    }
+
+    @Mutation(() => String)
+    async resetUserPassword(@Arg("userResetInput") userResetInput: UserResetInput): Promise<string> {
+        const { phone, password, new_password } = userResetInput;
+
+        let user = await UserModel.findOne({ phone });
+
+        if (!user) throw new ApolloError(statusMessage(422), "422");
+
+        const isPasswordVerified = await comparingPassword(password, user["password"]);
+
+        if (!isPasswordVerified) throw new ApolloError(statusMessage(422), "422");
+
+        const hashedPassword = await hashingPassword(new_password);
+
+        if (!hashedPassword) throw new ApolloError(statusMessage(410), "410");
+
+        user["password"] = hashedPassword;
+        await user.save();
+
+        return "password reset successfully";
     }
 
     @Mutation(() => UserResponse)
@@ -49,23 +92,46 @@ export default class UserResolver {
         return user;
     }
 
-    @Mutation(() => SignInResponse)
-    async sigInUser(@Arg("signInInput") signInInput: SignInInput): Promise<SignInResponse> {
-        const { phone, password } = signInInput;
+    @Mutation(() => UserResponse)
+    async editUser(@Arg("userEditInput") userEditInput: UserEditInput): Promise<UserResponse> {
+        const { phone } = userEditInput;
 
-        const user = await UserModel.findOne({ phone });
+        let user = await UserModel.findOne({ phone });
 
-        if (!user) throw new ApolloError(statusMessage(422), "422");
+        if (!user) throw new Error(statusMessage(400));
 
-        const isPasswordVerified = await comparingPassword(password, user["password"]);
+        for (let key in userEditInput) {
+            if (key === "address") {
+                user[key] = user[key] || {};
+                for (let innerKey in userEditInput[key]) {
+                    user[key][innerKey] = userEditInput[key][innerKey];
+                }
+            } else {
+                user[key] = userEditInput[key];
+            }
+        }
 
-        if (!isPasswordVerified) throw new ApolloError(statusMessage(422), "422");
+        await user.save();
 
-        const jwtAccessToken = generateJWTAccessToken(user.id);
+        return { id: "modification successfull is done" };
+    }
 
-        return {
-            id: user.id,
-            token: jwtAccessToken,
-        };
+    @Mutation(() => String)
+    async deleteUser(@Arg("phone") phone: number): Promise<string> {
+        const user = await UserModel.deleteOne({ phone });
+        if (user.deletedCount < 1) throw new ApolloError(statusMessage(404), "404");
+        return "user deleted successfully";
+    }
+
+    @Mutation(() => UserResponse)
+    async userActiveStatus(@Arg("phone") phone: number): Promise<UserResponse> {
+        let user = await UserModel.findOne({ phone });
+
+        if (!user) throw new ApolloError(statusMessage(404));
+
+        user["active_status"] = !user["active_status"];
+        user = await user.save();
+
+        return user;
     }
 }

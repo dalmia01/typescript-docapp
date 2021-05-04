@@ -21,7 +21,11 @@ input AddressInput {
 
 type Mutation {
   createUser(userinput: UserInput!): UserResponse!
+  deleteUser(phone: Float!): String!
+  editUser(userEditInput: UserEditInput!): UserResponse!
+  resetUserPassword(userResetInput: UserResetInput!): String!
   sigInUser(signInInput: SignInInput!): SignInResponse!
+  userActiveStatus(phone: Float!): UserResponse!
 }
 
 type Query {
@@ -35,6 +39,7 @@ input SignInInput {
 
 type SignInResponse {
   id: String!
+  phone: Float!
   token: String!
 }
 
@@ -42,6 +47,19 @@ type SignInResponse {
 The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
 """
 scalar Timestamp
+
+input UserEditInput {
+  address: AddressInput
+  age: Float
+  designation: String
+  email: String
+  first_name: String
+  gender: String
+  last_name: String
+  phone: Float!
+  role: String
+  title: String
+}
 
 input UserInput {
   address: AddressInput
@@ -55,6 +73,12 @@ input UserInput {
   phone: Float!
   role: String
   title: String
+}
+
+input UserResetInput {
+  new_password: String!
+  password: String!
+  phone: Float!
 }
 
 type UserResponse {

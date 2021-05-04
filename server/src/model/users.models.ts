@@ -18,7 +18,7 @@ const UserSchema: Schema = new Schema(
             area: String,
             city: String,
             state: String,
-            pin_code: Number,
+            pincode: Number,
         },
         old_passwords: [{ value: String, updated_at: String }],
         active_status: { type: Boolean, default: true },

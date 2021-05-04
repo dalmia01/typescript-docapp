@@ -93,6 +93,30 @@ export class UserInput {
 }
 
 @InputType()
+export class UserEditInput {
+    @Field({ nullable: true })
+    title?: string;
+    @Field({ nullable: true })
+    gender?: string;
+    @Field({ nullable: true })
+    age?: number;
+    @Field({ nullable: true })
+    first_name?: string;
+    @Field({ nullable: true })
+    last_name?: string;
+    @Field()
+    phone: number;
+    @Field({ nullable: true })
+    designation?: string;
+    @Field({ nullable: true })
+    role?: string;
+    @Field({ nullable: true })
+    email?: string;
+    @Field({ nullable: true })
+    address?: AddressInput;
+}
+
+@InputType()
 export class SignInInput {
     @Field()
     phone: number;
@@ -100,10 +124,22 @@ export class SignInInput {
     password: string;
 }
 
+@InputType()
+export class UserResetInput {
+    @Field()
+    phone: number;
+    @Field()
+    password: string;
+    @Field()
+    new_password: string;
+}
+
 @ObjectType()
 export class SignInResponse {
     @Field()
     id: string;
+    @Field()
+    phone: number;
     @Field()
     token: string;
 }
