@@ -24,4 +24,4 @@ export const generateJWTAccessToken = (id: string): string => {
     return jwtAccessToken;
 };
 
-export const sixDigitRandomNumber = () => Math.floor(100000 + Math.random() * 900000);
+export const generateRandomNumber = (num: number) => Math.floor(num + Math.random() * 900000);

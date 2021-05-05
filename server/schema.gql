@@ -19,6 +19,45 @@ input AddressInput {
   state: String
 }
 
+type AddressResponse {
+  area: String
+  city: String
+  line_1: String
+  pincode: String
+  state: String
+}
+
+type BookingsResponse {
+  date: String
+  doctor_id: String
+  time: String
+}
+
+input ClinicEditInput {
+  address: String
+  clinic_name: String
+  id: String!
+  phone_num: Float
+  website: String
+}
+
+input ClinicInput {
+  address: String
+  clinic_name: String!
+  phone_num: Float
+  website: String
+}
+
+type ClinicResponse {
+  address: String
+  clinic_name: String
+  created_at: String
+  id: String
+  phone_num: Float
+  updated_at: Timestamp
+  website: String
+}
+
 input ConfirmUserOtpInput {
   hash: String!
   new_password: String!
@@ -26,19 +65,138 @@ input ConfirmUserOtpInput {
   phone: Float!
 }
 
+input CreateInputPatient {
+  address: PatientAddressInput
+  blood_grp: String
+  dob: String
+  email: String
+  first_name: String
+  last_name: String
+  patient_serial_id: String
+  phone: String!
+  salutation: String
+  sex: String
+}
+
+input EditPatientInput {
+  address: PatientAddressInput
+  blood_grp: String
+  dob: String
+  email: String
+  first_name: String
+  id: String!
+  last_name: String
+  patient_serial_id: String
+  phone: String!
+  salutation: String
+  sex: String
+}
+
+input FilterInputPatient {
+  date: String
+  name_phone: String
+}
+
+type MediaResponse {
+  filename: String
+  mimetype: String
+  original_name: String
+}
+
+input MedicalHistoryDataInput {
+  id: String
+  label: String
+  name: String
+  operator: String
+  possible_values: [String!]
+  value: String
+}
+
+type MedicalHistoryDataResponse {
+  id: String
+  label: String
+  name: String
+  operator: String
+  possible_values: String
+  value: String
+}
+
+input MedicalHistoryInput {
+  id: String!
+  medical_history: [MedicalHistoryInputType!]
+}
+
+input MedicalHistoryInputType {
+  data: [MedicalHistoryDataInput!]
+  defination: String
+  name: String
+}
+
+type MedicalHistoryResponse {
+  data: [MedicalHistoryDataResponse!]
+  defination: String
+  name: String
+}
+
 type Mutation {
+  addClinic(clinicInput: ClinicInput!): ClinicResponse!
   confirmOtpUserForgetpassword(confirmUserOtpInput: ConfirmUserOtpInput!): String!
+  createPatient(createInputPatient: CreateInputPatient!): PatientResponse!
   createUser(userinput: UserInput!): UserResponse!
+  deleteClinic(clinicId: String!): String!
+  deletePatient(id: String!): String!
   deleteUser(phone: Float!): String!
+  editPatient(editPatientInput: EditPatientInput!): PatientResponse!
   editUser(userEditInput: UserEditInput!): UserResponse!
   resetUserPassword(userResetInput: UserResetInput!): String!
+  saveMedicalHistory(medicalHistoryInput: MedicalHistoryInput!): PatientResponse!
   sendOtpUserForgetPassword(phone: Float!): SendOtpResponse!
   sigInUser(signInInput: SignInInput!): SignInResponse!
+  updateClinic(clinicEditInput: ClinicEditInput!): ClinicResponse!
+  updatePatientVaccineTrack(id: String!): String!
+  updateVaccineChart(vaccinePatientInput: VaccinePatientInput!): PatientResponse!
   userActiveStatus(phone: Float!): UserResponse!
 }
 
+input PatientAddressInput {
+  area: String
+  city: String
+  line_1: String
+  pincode: String
+  state: String
+}
+
+type PatientResponse {
+  address: AddressResponse
+  age: Float
+  blood_grp: String
+  bookings: [BookingsResponse!]
+  dob: String
+  email: String
+  first_name: String
+  follow_up_date: Timestamp
+  id: String
+  isTracked: Boolean
+  last_name: String
+  media: [MediaResponse!]
+  medical_history: [MedicalHistoryResponse!]
+  notes: String
+  patient_id: String
+  patient_serial_id: String
+  patient_unique_id: String
+  phone: String
+  salutation: String
+  sex: String
+  vaccine: [VaccineResponse!]
+}
+
 type Query {
+  fetchAllClinics(role: String): [ClinicResponse!]!
   fetchAllUsers(role: String): [UserResponse!]!
+  fetchfilteredClinics(filter: String!): [ClinicResponse!]!
+  getPatient(filterInputPatient: FilterInputPatient!): [PatientResponse!]!
+  getPatientMedia(id: String!): PatientResponse!
+  vaccineChart(id: String!): PatientResponse!
 }
 
 type SendOtpResponse {
@@ -111,4 +269,36 @@ type UserResponse {
   role: String
   title: String
   updated_at: Timestamp
+}
+
+input VaccineInput {
+  due_date: Timestamp
+  given_date: Timestamp
+  medicine_brand: String
+  medicine_name: String
+  notes: String
+  range: Float
+  vaccine_group_name: String
+}
+
+input VaccinePatientInput {
+  due_date: Timestamp
+  given_date: Timestamp
+  id: String!
+  medicine_brand: String
+  medicine_name: String
+  notes: String
+  range: Float
+  vaccine: VaccineInput
+  vaccine_group_name: String
+}
+
+type VaccineResponse {
+  due_date: Timestamp
+  given_date: Timestamp
+  medicine_brand: String
+  medicine_name: String
+  notes: String
+  range: Float
+  vaccine_group_name: String
 }
