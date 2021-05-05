@@ -143,3 +143,23 @@ export class SignInResponse {
     @Field()
     token: string;
 }
+
+@ObjectType()
+export class SendOtpResponse {
+    @Field()
+    message: string;
+    @Field()
+    hash: string;
+}
+
+@InputType()
+export class ConfirmUserOtpInput {
+    @Field()
+    phone: number;
+    @Field()
+    otp: number;
+    @Field()
+    hash: string;
+    @Field()
+    new_password: string;
+}

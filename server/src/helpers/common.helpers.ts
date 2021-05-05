@@ -23,3 +23,5 @@ export const generateJWTAccessToken = (id: string): string => {
     const jwtAccessToken = sign({ id }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
     return jwtAccessToken;
 };
+
+export const sixDigitRandomNumber = () => Math.floor(100000 + Math.random() * 900000);

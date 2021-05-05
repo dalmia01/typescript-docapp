@@ -19,17 +19,31 @@ input AddressInput {
   state: String
 }
 
+input ConfirmUserOtpInput {
+  hash: String!
+  new_password: String!
+  otp: Float!
+  phone: Float!
+}
+
 type Mutation {
+  confirmOtpUserForgetpassword(confirmUserOtpInput: ConfirmUserOtpInput!): String!
   createUser(userinput: UserInput!): UserResponse!
   deleteUser(phone: Float!): String!
   editUser(userEditInput: UserEditInput!): UserResponse!
   resetUserPassword(userResetInput: UserResetInput!): String!
+  sendOtpUserForgetPassword(phone: Float!): SendOtpResponse!
   sigInUser(signInInput: SignInInput!): SignInResponse!
   userActiveStatus(phone: Float!): UserResponse!
 }
 
 type Query {
   fetchAllUsers(role: String): [UserResponse!]!
+}
+
+type SendOtpResponse {
+  hash: String!
+  message: String!
 }
 
 input SignInInput {

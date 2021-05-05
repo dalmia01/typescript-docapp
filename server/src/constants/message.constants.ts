@@ -10,6 +10,8 @@ export const STATUS_CODE = {
     CREATED: 201,
     USER_ALREADY_EXISTS: 406,
     FUNCTIONAL_ERROR: 410,
+    USER_NOT_EXIST: 420,
+    OTP_TIMEOUT: 409,
 };
 
 export function statusMessage(status: number): string {
@@ -34,5 +36,9 @@ export function statusMessage(status: number): string {
             return "user already exists!";
         case STATUS_CODE.FUNCTIONAL_ERROR:
             return "functional error!";
+        case STATUS_CODE.USER_NOT_EXIST:
+            return "user does not exist";
+        case STATUS_CODE.OTP_TIMEOUT:
+            return "entered otp has expired";
     }
 }

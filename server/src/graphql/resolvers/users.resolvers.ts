@@ -1,9 +1,20 @@
+import { createHmac } from "crypto";
 import { Query, Mutation, Resolver, Arg } from "type-graphql";
 import UserModel from "../../model/users.models";
-import { SignInInput, SignInResponse, UserInput, UserResponse, UserResetInput, UserEditInput } from "../schemas/users.schemas";
+import {
+    SignInInput,
+    SignInResponse,
+    UserInput,
+    UserResponse,
+    UserResetInput,
+    UserEditInput,
+    SendOtpResponse,
+    ConfirmUserOtpInput,
+} from "../schemas/users.schemas";
 import { statusMessage } from "../../constants/message.constants";
 import { ApolloError } from "apollo-server-errors";
-import { comparingPassword, generateJWTAccessToken, hashingPassword } from "../../helpers/common.helpers";
+import { comparingPassword, generateJWTAccessToken, hashingPassword, sixDigitRandomNumber } from "../../helpers/common.helpers";
+import { sendSms } from "../../helpers/sms.helpers";
 
 @Resolver()
 export default class UserResolver {
@@ -59,6 +70,47 @@ export default class UserResolver {
         await user.save();
 
         return "password reset successfully";
+    }
+
+    @Mutation(() => SendOtpResponse)
+    async sendOtpUserForgetPassword(@Arg("phone") phone: number): Promise<SendOtpResponse> {
+        const user = await UserModel.findOne({ phone });
+
+        if (!user) throw new ApolloError(statusMessage(420));
+
+        const otp = sixDigitRandomNumber();
+        const ttl = 2 * 60 * 1000;
+        const expires = Date.now() + ttl;
+        const data = `${phone}.${otp}.${expires}`;
+        const hash = createHmac("sha256", process.env.SMS_SECRET_KEY).update(data).digest("hex");
+        const fullHash = `${hash}.${expires}`;
+
+        const isVerified = await sendSms(`Your OTP Verification Code is ${otp}. Do not disclose it to anyone.`, `+91 ${phone}`);
+
+        if (!isVerified) throw new ApolloError(statusMessage(410));
+
+        return { message: "Otp is sent to your mobile number", hash: fullHash };
+    }
+
+    @Mutation(() => String)
+    async confirmOtpUserForgetpassword(@Arg("confirmUserOtpInput") confirmUserOtpInput: ConfirmUserOtpInput): Promise<string> {
+        const { phone, otp, hash, new_password } = confirmUserOtpInput;
+        const [hashValue, expires] = hash.split(".");
+
+        let now = Date.now();
+        if (now > parseInt(expires)) throw new ApolloError(statusMessage(409));
+
+        const data = `${phone}.${otp}.${expires}`;
+
+        const newCalculatedhash = createHmac("sha256", process.env.SMS_SECRET_KEY).update(data).digest("hex");
+
+        if (newCalculatedhash !== hashValue) throw new ApolloError(statusMessage(422));
+
+        const hashedPassword = await hashingPassword(new_password);
+
+        await UserModel.findOneAndUpdate({ phone }, { password: hashedPassword });
+
+        return "otp confirm and password set successfully";
     }
 
     @Mutation(() => UserResponse)
