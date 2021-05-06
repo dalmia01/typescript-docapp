@@ -1,0 +1,198 @@
+.scroll_buttons {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin: 20px 0px;
+
+    button {
+        background: #a9a9a9;
+        border: 0;
+        outline: 0;
+        cursor: pointer;
+        margin: 5px;
+        padding: 5px 10px;
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+    }
+}
+
+.main_table_layout {
+    display: grid;
+    grid-template-columns: auto auto;
+    width: auto;
+    max-width: 95vw;
+    font-size: 14px;
+
+    max-height: 80vh;
+
+    overflow: auto;
+    justify-content: start;
+}
+
+.grid_tab_layout_header {
+    position: relative;
+    margin-left: 20px;
+}
+
+.tasks {
+    overflow: hidden;
+}
+
+.grid_tab_layout_sidebar .grid_tab_ > div.tasks.top {
+    border-left: 2px solid #fd868c;
+}
+
+.grid_tab_layout_sidebar .grid_tab_ > div.tasks.medium {
+    border-left: 2px solid #f5a824;
+}
+
+.grid_tab_layout_sidebar .grid_tab_ > div.tasks.low {
+    border-left: 2px solid #0abc66;
+}
+
+.tasks_names {
+    i {
+        position: relative;
+
+        &:before {
+            content: "\2713";
+            position: absolute;
+        }
+    }
+}
+
+.grid_tab_layout_sidebar {
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    background: #e6e9f0;
+    position: sticky;
+    left: 0;
+    z-index: 12;
+
+    .grid_tab_ {
+        display: grid;
+        grid-gap: 2px;
+
+        > div {
+            min-height: 100px;
+            max-width: 200px;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-left: 1px solid #a9a9a9;
+            border-right: 1px solid #a9a9a9;
+            padding: 0px 15px;
+
+            > span {
+                overflow: hidden;
+            }
+
+            &:first-child {
+                position: sticky;
+                top: 0;
+                z-index: 2;
+                background: #fff;
+                min-height: 50px;
+                max-height: 50px;
+                font-size: 14px;
+                border: 1px solid #a9a9a9;
+            }
+        }
+    }
+}
+
+.grid_tab_header {
+    position: relative;
+    display: flex;
+}
+
+.vaccine-table {
+    border-collapse: separate;
+    border-spacing: 0 0.5em;
+
+    .vaccine-chart-row {
+        background-color: white;
+        .row-label {
+            vertical-align: middle;
+            text-align: center;
+        }
+    }
+
+    .vaccine-card {
+        margin-bottom: 8px;
+    }
+
+    .blue {
+        background: rgba(232, 240, 253, 1);
+        padding: 8px;
+        border-left: 3px solid rgba(45, 118, 221, 1);
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        display: grid;
+    }
+
+    .orange {
+        background: #f9f1e4;
+        padding: 8px;
+        border-left: 3px solid #f4a620;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        display: grid;
+    }
+
+    .green {
+        background: #e3f8ef;
+        padding: 8px;
+        border-left: 3px solid #0abe67;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        display: grid;
+    }
+
+    .red {
+        background: #fd868c33;
+        padding: 8px;
+        border-left: 3px solid #fd868c;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        display: grid;
+    }
+}
+/* width */
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.only-print-display {
+    display: none;
+}
+
+.print-details-vaccine {
+    width: 500px;
+    margin: 10px auto;
+}
+
+@media print {
+    .only-print-display {
+        display: block;
+    }
+}

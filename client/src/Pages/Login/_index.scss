@@ -1,0 +1,22 @@
+.sso-toggle {
+    display: block;
+}
+
+.back-icon {
+    i {
+        display: inline-block;
+        text-decoration: none !important;
+        color: blue;
+        padding-right: 5px;
+    }
+}
+
+.resend-link {
+    padding-right: 10px;
+}
+
+.errors {
+    color: red;
+    margin: 20px 0px;
+    text-align: center;
+}

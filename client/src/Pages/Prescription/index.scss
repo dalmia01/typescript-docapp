@@ -1,0 +1,40 @@
+.card {
+    word-break: unset;
+    word-wrap: unset;
+}
+
+.ms-tabs {
+    background-color: blue;
+    color: white;
+}
+
+.blue-btn {
+    color: #fff;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: #067def;
+    border: 1px solid transparent;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 2px;
+    text-transform: capitalize;
+    font-size: 15px;
+    padding: 7px 50px;
+    transition: all ease-in 0.3s;
+}
+
+.body-tabs.body-tabs-layout {
+    border: 0;
+}
+
+.selection-tabs {
+    padding-bottom: 10px;
+
+    .tab {
+        background: white;
+        color: black;
+        border-color: #022241;
+    }
+}

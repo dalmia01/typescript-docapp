@@ -1,0 +1,378 @@
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+input.filter-select {
+    border: 0;
+    padding: 10px 20px;
+    letter-spacing: 1.5px;
+    outline: 0;
+    z-index: 1;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+
+    &:focus ~ .filter-select-Placeholder,
+    &:valid ~ .filter-select-Placeholder {
+        transform: translateY(-20px);
+        z-index: 3;
+    }
+}
+
+.filter-select-Placeholder {
+    padding: 0px 5px;
+    position: absolute;
+    transform: translateY(0);
+    top: 10px;
+    left: 10px;
+    color: rgba(0, 0, 0, 0.6);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.input-field.select-Multiple {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.select-Multiple {
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 20px -1px rgba(22, 42, 90, 0.12);
+    border-radius: 8px;
+
+    &.fixed-height {
+        max-height: 130px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin: 20px 0px;
+    }
+}
+
+.selct-itemmain-div {
+    display: flex;
+    margin: 0px 20px;
+    flex-wrap: wrap;
+}
+
+@keyframes scaling {
+    100% {
+        transform: scale(1);
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+.select-initem-div {
+    background: rgba(228, 236, 250, 0.7);
+    margin: 10px 5px;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+    display: grid;
+    transform: scale(1);
+    width: 100%;
+    opacity: 1;
+    max-width: 150px;
+    cursor: pointer;
+    grid-template-columns: 1fr auto;
+
+    &.active-option {
+        background: rgb(3, 60, 115);
+        color: #fff;
+    }
+
+    //width:0px;opacity:0;
+    //  animation:scaling .2s ease-in-out forwards;
+}
+
+.fatimes.active-times {
+    &:before {
+        color: #fff;
+    }
+}
+
+.no-flex {
+    display: flex;
+    flex-direction: column;
+
+    &.wrap-flex {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
+
+.none {
+    opacity: 0;
+    height: 0px;
+    overflow: hidden;
+}
+
+.show-box {
+    transition: height 0.3s ease;
+    max-height: 300px;
+    overflow: auto;
+}
+
+.select-grid {
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.add-tools {
+    padding: 5px;
+    margin: 10px;
+    display: inline-block;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.select-Multiple i {
+    position: relative;
+    cursor: pointer;
+    text-align: right;
+    padding: 0px 10px;
+}
+
+.fatimes {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:before {
+        content: "\2715";
+        position: absolute;
+        font-size: 13px;
+        font-weight: 600;
+        font-style: initial;
+        color: #4d18ff;
+    }
+}
+
+@keyframes transforming {
+    0% {
+        background: #4d18ff;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.selct-single-item {
+    justify-content: flex-start;
+    // transform:scale(0,0);
+    color: #333;
+    width: 100%;
+    display: grid;
+    padding: 9px 0px;
+    backface-visibility: hidden;
+    transition: all 0.3s ease;
+    //animation:transforming 1s forwards;
+    height: auto;
+    border-bottom: 0.5px solid #eee;
+
+    &:before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: auto;
+        background: transparent;
+    }
+}
+
+.selct-single-item span {
+    width: 90%;
+    margin-left: 15px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    text-overflow: ellipsis;
+    font-size: 13px;
+}
+
+.select-initem-span {
+    overflow: hidden;
+    transition: 1s;
+    position: relative;
+    text-overflow: ellipsis;
+    font-size: 13px;
+    padding: 5px;
+}
+
+.selct-single-item:hover {
+    background: rgb(3, 60, 115);
+    cursor: pointer;
+    color: #fff;
+}
+
+.animate-out {
+    height: 0px;
+    width: 0px;
+    transition: width 0.2s ease-out;
+    animation: shutdown 400ms linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes shutdown {
+    0% {
+        transform: scale3d(1, 1, 1);
+    }
+
+    50% {
+        background: rgba(77, 24, 255, 0.5);
+        transform: scale3d(1, 0.005, 1);
+    }
+
+    100% {
+        transform: scale3d(0, 0, 1);
+    }
+}
+
+@keyframes main {
+    0% {
+        transform: scaleX(1);
+    }
+
+    100% {
+        transform: scaleX(0);
+    }
+}
+
+.slide-in-out {
+    transform-origin: 0% 100%;
+    animation: main 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.FormElements {
+    padding: 20px;
+    text-align: left;
+
+    // label {
+    //     font-weight: 700;
+    //     text-transform: capitalize;
+    // }
+
+    // input[type="text"],
+    // textarea,
+    // select {
+    //     margin: 5px 0px;
+    //     height: calc(2.25rem + 2px);
+    //     padding: 0px 5px;
+    //     font-size: 1rem;
+    //     font-weight: 400;
+    //     line-height: 1.5;
+    //     color: #495057;
+    //     background-color: #fff;
+    //     background-clip: padding-box;
+    //     border: 1px solid #ced4da;
+    //     border-radius: 0.25rem;
+    // }
+
+    // textarea {
+    //     padding: 10px;
+    //     height: 50px;
+    // }
+
+    .formElement {
+        display: grid;
+        justify-content: flex-start;
+        grid-template-columns: 100%;
+        margin-bottom: 30px;
+    }
+}
+
+.add-more-fields {
+    margin-left: 70%;
+}
+
+.mrg20 {
+    label {
+        margin-right: 30px;
+        display: inline-flex;
+        align-items: center;
+
+        span {
+            margin-right: 5px;
+            font-weight: normal;
+        }
+    }
+}
+
+.empty-state {
+    text-align: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+label.row-flex {
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    justify-content: space-between;
+
+    > span {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.pos-rel {
+    position: relative;
+}
+
+.grid-row {
+    display: grid;
+}
+
+.auto-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    margin: 0px 0px 10px;
+}
+
+.mrg-10 {
+    margin: 0px 10px;
+}
+
+.flex-row {
+    display: flex;
+    align-items: center;
+    margin: 0px 0px 30px;
+}
+
+.errors {
+    color: red;
+    text-align: left;
+}
+
+.success {
+    color: green;
+    text-align: left;
+}
+
+.mg-left-20 {
+    margin-left: 20px;
+}
+
+.react-datepicker-wrapper {
+    display: block;
+}

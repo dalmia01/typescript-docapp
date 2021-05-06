@@ -1,0 +1,100 @@
+.empty-state {
+    text-align: center;
+    padding-top: 50px;
+
+    .img {
+        width: 50%;
+    }
+
+    .msg {
+        text-transform: uppercase;
+        font-weight: 200;
+        font-size: 24px;
+    }
+
+    .icon {
+        vertical-align: text-bottom;
+        padding-right: 5px;
+    }
+}
+
+.last-visit {
+    .date-list {
+        height: 180px;
+    }
+
+    .list-item {
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 0;
+    }
+
+    .list-item:hover {
+        background-color: #ececec;
+    }
+}
+
+.user-card {
+    .p-name {
+        font-size: 18px;
+    }
+
+    .p-details {
+        .icon {
+            vertical-align: text-bottom;
+            padding-right: 5px;
+            font-size: 1rem;
+        }
+
+        .icon-cell {
+            padding-right: 0;
+        }
+
+        .data-cell {
+            padding-left: 0;
+        }
+    }
+
+    .n-visit {
+        margin-top: 10px;
+        font-size: 0.7rem;
+    }
+}
+
+.vitals-table {
+    overflow: auto;
+}
+
+.justify-align {
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+@media (max-width: 990px) {
+    .col-width {
+        max-width: 50%;
+    }
+}

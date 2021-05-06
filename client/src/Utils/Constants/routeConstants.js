@@ -1,0 +1,17 @@
+export const routeConstants = {
+    HOME: "/home",
+    PRESCRIPTION: "/prescription",
+    USER_MANAGER: "/users",
+    FILE_MANAGER: "/finder",
+    LOGIN: "/login",
+    LOGOUT: "/logout",
+    FORGOT_PASSWORD: "/forgot-password",
+    RESET_PASSWORD: "/reset-password/:token",
+    VACCINATION: "/vaccination",
+    APPOINTMENTS: "/appointments",
+    BOOKINGS: "/bookings",
+    VACCINATION_DETAILS: "/vaccination-details",
+    INVOICES_MANAGER: "/invoices",
+    CLINIC_MANAGER: "/clinics",
+    PATIENTS_BOOKING: "/patients-booking",
+};

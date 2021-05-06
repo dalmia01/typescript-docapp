@@ -1,0 +1,15 @@
+.flex-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    &.space-2x {
+        > div:first-child {
+            margin-right: 10px;
+        }
+    }
+}
+
+.font-2x {
+    font-size: 2em !important;
+}

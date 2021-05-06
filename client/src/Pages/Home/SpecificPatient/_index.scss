@@ -1,0 +1,24 @@
+.active-visit {
+    background: #16d9e3;
+
+    color: #fff;
+}
+
+.text-left {
+    cursor: pointer;
+
+    &:first-child {
+        margin-top: 10px;
+    }
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.btns-group {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px 0px;
+}

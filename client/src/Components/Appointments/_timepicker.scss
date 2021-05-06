@@ -1,0 +1,46 @@
+.rc-time-picker-panel-select-option-selected {
+    background-color: #edeffe;
+    font-weight: normal;
+}
+
+.rc-time-picker-clear,
+.rc-time-picker-clear-icon:after {
+    font-size: 15px;
+}
+
+.rc-time-picker-panel-select,
+.rc-time-picker-input,
+.rc-time-picker-panel-input {
+    font-family: "Consolas", sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.flex-content {
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.center-align {
+    text-align: center;
+}
+
+.text-bold-big {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.timepicker-container {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 90% 10%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}

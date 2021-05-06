@@ -1,0 +1,16 @@
+.empty {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px;
+
+    img {
+        width: 150px;
+    }
+}
+
+.pd-tb-10 {
+    padding: 10px 0px;
+}
