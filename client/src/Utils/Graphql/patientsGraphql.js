@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 const FILTER_PATIENT = gql`
-    query($filter: String) {
-        patient: getPatient(filter: $filter) {
+    query($name_phone: String, $date: String) {
+        patient: getPatient(filterInputPatient: { date: $date, name_phone: $name_phone }) {
             id
             first_name
             last_name
@@ -60,7 +60,7 @@ const GET_PATIENT_MEDIA = gql`
 `;
 
 const GET_VACCINE_CHART = gql`
-    query($id: String) {
+    query vaccineChart($id: String) {
         vaccine: vaccineChart(id: $id) {
             id
             updated_at

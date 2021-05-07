@@ -3,6 +3,14 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input AddMedicineDefinationInput {
+  category: String
+  description: String
+  dosageForm: String
+  fields: String
+  name: String
+}
+
 type Address {
   area: String
   city: String
@@ -27,9 +35,57 @@ type AddressResponse {
   state: String
 }
 
+input AppointmentAllSlotsInput {
+  friday: [String!]
+  monday: [String!]
+  saturday: [String!]
+  sunday: [String!]
+  thursday: [String!]
+  tuesday: [String!]
+  wednesday: [String!]
+}
+
+type AppointmentAllSlotsResponse {
+  friday: [String!]
+  monday: [String!]
+  saturday: [String!]
+  sunday: [String!]
+  thursday: [String!]
+  tuesday: [String!]
+  wednesday: [String!]
+}
+
+type AppointmentBookedResponse {
+  date: String
+  id: String
+  patient: String
+  time: String
+}
+
+input AppointmentDaySlotInput {
+  date: String!
+  day: String!
+  id: String!
+}
+
+type AppointmentResponse {
+  booked: [AppointmentBookedResponse!]
+  id: String
+  slots: AppointmentAllSlotsResponse
+  user: String
+}
+
+input BookAppointmentInput {
+  date: String
+  doctor_id: String
+  patient_id: String
+  time: String
+}
+
 type BookingsResponse {
   date: String
   doctor_id: String
+  id: String
   time: String
 }
 
@@ -58,6 +114,61 @@ type ClinicResponse {
   website: String
 }
 
+type CommonDefinitionFields {
+  id: String
+  label: String
+  name: String
+  operator: String
+  possible_values: [String!]
+  value: String
+}
+
+input CommonDefinitonInput {
+  category: String
+  fields: String
+  id: String
+  name: String
+  patient_id: String
+}
+
+type CommonDefintionsResponse {
+  category: String
+  description: String
+  dosageForm: String
+  fields: [CommonDefinitionFields!]
+  id: String
+  is_fav: Boolean
+  name: String
+}
+
+type CommonDefsDataResponse {
+  defination: String
+  id: String
+  label: String
+  name: String
+  operator: String
+  possible_values: [String!]
+  value: String
+}
+
+type CommonDefsResponse {
+  data: [CommonDefsDataResponse!]
+  defination: String
+  id: String
+  name: String
+}
+
+input ConfirmPatientBookingInput {
+  date: String
+  doctor_id: String!
+  first_name: String!
+  hash: String!
+  last_name: String!
+  otp: String!
+  phone: String!
+  time: String
+}
+
 input ConfirmUserOtpInput {
   hash: String!
   new_password: String!
@@ -78,6 +189,14 @@ input CreateInputPatient {
   sex: String
 }
 
+type DoctorResponse {
+  designation: String
+  first_name: String
+  id: String
+  last_name: String
+  title: String
+}
+
 input EditPatientInput {
   address: PatientAddressInput
   blood_grp: String
@@ -92,9 +211,56 @@ input EditPatientInput {
   sex: String
 }
 
+input FetchFilterDefinitionInput {
+  category: String
+  filteredValue: String
+  someId: String
+}
+
+input FetchInvoiceInput {
+  filter_criteria: String
+  patient_id: String
+  start: String
+  unique: String
+}
+
 input FilterInputPatient {
   date: String
   name_phone: String
+}
+
+input GetPrescriptionInput {
+  id: String
+  unique: String
+}
+
+type InvoiceResponse {
+  created_at: String
+  id: String
+  line_items: [LineItemResponse!]
+  patient_id: PatientResponse
+  payment_mode: String
+  serial_id: Float
+  tax_rate: String
+  total_paid: String
+  updated_at: String
+}
+
+type LineItemResponse {
+  description: String
+  id: String
+  input_id: String
+  name: String
+  price: String
+  quantity: String
+}
+
+input LineItemsInput {
+  description: String
+  id: String
+  name: String
+  price: String
+  quantity: String
 }
 
 type MediaResponse {
@@ -135,27 +301,47 @@ input MedicalHistoryInputType {
 type MedicalHistoryResponse {
   data: [MedicalHistoryDataResponse!]
   defination: String
+  id: String
   name: String
 }
 
 type Mutation {
   addClinic(clinicInput: ClinicInput!): ClinicResponse!
+  addDefinationName(addDefinationNameInput: CommonDefinitonInput!): CommonDefintionsResponse!
+  addMedicineDefinationName(addMedicineDefinationInput: AddMedicineDefinationInput!): CommonDefintionsResponse!
+  bookAppointment(bookAppointmentInput: BookAppointmentInput!): String!
+  commonDefinition(commonDefinitonInput: CommonDefinitonInput!): CommonDefintionsResponse!
+  confirmBookingByPatient(confirmPatientBookingInput: ConfirmPatientBookingInput!): String!
   confirmOtpUserForgetpassword(confirmUserOtpInput: ConfirmUserOtpInput!): String!
   createPatient(createInputPatient: CreateInputPatient!): PatientResponse!
   createUser(userinput: UserInput!): UserResponse!
-  deleteClinic(clinicId: String!): String!
-  deletePatient(id: String!): String!
-  deleteUser(phone: Float!): String!
+  deleteClinic(clinicId: String): String!
+  deleteCommonDefination(id: String): String!
+  deleteCommonDefinationField(defination: String): CommonDefintionsResponse!
+  deleteInvoice(serial_id: Float): String!
+  deletePatient(id: String): String!
+  deletePrescription(id: String): String!
+  deleteUser(phone: Float): String!
+  editCommonDefination(defination: String): CommonDefintionsResponse!
+  editMedicineDefinationName(editCommonDefinitonInput: AddMedicineDefinationInput!): CommonDefintionsResponse!
   editPatient(editPatientInput: EditPatientInput!): PatientResponse!
   editUser(userEditInput: UserEditInput!): UserResponse!
+  favouriteMedicineValues(defination: String): String!
+  prescription(data: String): String!
+  removeFavouriteMedicineValues(defination_id: String): String!
+  removeFavouritePrescription(id: String): [PrescriptionResponse!]!
   resetUserPassword(userResetInput: UserResetInput!): String!
+  saveInvoice(saveInvoiceInput: SaveInvoiceInput!): InvoiceResponse!
   saveMedicalHistory(medicalHistoryInput: MedicalHistoryInput!): PatientResponse!
-  sendOtpUserForgetPassword(phone: Float!): SendOtpResponse!
+  sendOtpPatientBooking(patientSendOtpBookingInput: PatientSendOtpBookingInput!): String!
+  sendOtpUserForgetPassword(phone: Float): SendOtpResponse!
+  setApointmentSlots(setAppointmentSlotInput: SetAppointmentSlotInput!): String!
   sigInUser(signInInput: SignInInput!): SignInResponse!
   updateClinic(clinicEditInput: ClinicEditInput!): ClinicResponse!
-  updatePatientVaccineTrack(id: String!): String!
+  updateInvoice(updateInvoiceInput: UpdateInvoiceInput!): InvoiceResponse!
+  updatePatientVaccineTrack(id: String): String!
   updateVaccineChart(vaccinePatientInput: VaccinePatientInput!): PatientResponse!
-  userActiveStatus(phone: Float!): UserResponse!
+  userActiveStatus(phone: Float): UserResponse!
 }
 
 input PatientAddressInput {
@@ -171,6 +357,7 @@ type PatientResponse {
   age: Float
   blood_grp: String
   bookings: [BookingsResponse!]
+  created_at: String
   dob: String
   email: String
   first_name: String
@@ -187,16 +374,78 @@ type PatientResponse {
   phone: String
   salutation: String
   sex: String
+  updated_at: String
   vaccine: [VaccineResponse!]
 }
 
+type PatientResponseVaccine {
+  due_date: String
+  given_date: String
+  id: String
+  medicine_brand: String
+  medicine_name: String
+  notes: String
+  range: Float
+  updated_at: String
+  vaccine_group_name: String
+}
+
+input PatientSendOtpBookingInput {
+  first_name: String
+  last_name: String
+  phone: String
+}
+
+type PrescriptionResponse {
+  additional_notes: String
+  diagnosis: [CommonDefsResponse!]
+  doctor: DoctorResponse
+  fav_name: String
+  findings: [CommonDefsResponse!]
+  id: String
+  instructions: [CommonDefsResponse!]
+  investigations: [CommonDefsResponse!]
+  medicines: [CommonDefsResponse!]
+  patient: String
+  symptoms: [CommonDefsResponse!]
+  updatedAt: Timestamp
+  vitals: CommonDefsResponse
+}
+
 type Query {
+  chart: VaccineChartResponse!
   fetchAllClinics(role: String): [ClinicResponse!]!
   fetchAllUsers(role: String): [UserResponse!]!
-  fetchfilteredClinics(filter: String!): [ClinicResponse!]!
+  fetchDefinations(category: String): [CommonDefintionsResponse!]!
+  fetchFilteredDefinations(fetchFilterDefinitionInput: FetchFilterDefinitionInput!): [CommonDefintionsResponse!]!
+  fetchInvoices(fetchInvoiceInput: FetchInvoiceInput!): [InvoiceResponse!]!
+  fetchfilteredClinics(filter: String): [ClinicResponse!]!
+  getAppointmentsSlots(id: String): AppointmentResponse!
+  getAvailableSlots(appointmentDaySlotInput: AppointmentDaySlotInput!): [String!]!
+  getDueVaccinePatients(date: String): [PatientResponse!]!
+  getFavouritePrescriptions: [PrescriptionResponse!]!
+  getGivenVaccinePatients(dates: VaccineChartDatesInput!): [PatientResponse!]!
   getPatient(filterInputPatient: FilterInputPatient!): [PatientResponse!]!
-  getPatientMedia(id: String!): PatientResponse!
-  vaccineChart(id: String!): PatientResponse!
+  getPatientBookings: String!
+  getPatientMedia(id: String): PatientResponse!
+  getPrescriptions(getPrescriptionInput: GetPrescriptionInput!): [PrescriptionResponse!]!
+  specificDefination(specificDefintionInput: SpecificDefintionInput!): CommonDefintionsResponse!
+  vaccineChart(id: String): [PatientResponseVaccine!]!
+}
+
+type RangesResponse {
+  end_range: Float
+  range_label: String
+  range_unit: String
+  start_range: Float
+}
+
+input SaveInvoiceInput {
+  line_items: [LineItemsInput!]
+  patient_id: String
+  payment_mode: String
+  tax_rate: String
+  total_paid: String
 }
 
 type SendOtpResponse {
@@ -204,21 +453,51 @@ type SendOtpResponse {
   message: String!
 }
 
+input SetAppointmentSlotInput {
+  slots: AppointmentAllSlotsInput
+  user_id: String!
+}
+
 input SignInInput {
   password: String!
-  phone: Float!
+  phone: String!
 }
 
 type SignInResponse {
+  created_at: String
+  first_name: String
   id: String!
-  phone: Float!
+  last_name: String
+  phone: String!
   token: String!
+  updated_at: String
+}
+
+input SpecificDefintionInput {
+  category: String
+  id: String
 }
 
 """
 The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
 """
 scalar Timestamp
+
+input UpdateInvoiceInput {
+  line_items: [UpdateLineItemsInput!]
+  payment_mode: String
+  serial_id: Float
+  tax_rate: String
+  total_paid: String
+}
+
+input UpdateLineItemsInput {
+  description: String
+  input_id: String
+  name: String
+  price: String
+  quantity: String
+}
 
 input UserEditInput {
   address: AddressInput
@@ -271,6 +550,17 @@ type UserResponse {
   updated_at: Timestamp
 }
 
+input VaccineChartDatesInput {
+  end: String
+  start: String
+}
+
+type VaccineChartResponse {
+  id: String
+  ranges: [RangesResponse!]
+  vaccine_group: [VaccinesResponse!]
+}
+
 input VaccineInput {
   due_date: Timestamp
   given_date: Timestamp
@@ -301,4 +591,15 @@ type VaccineResponse {
   notes: String
   range: Float
   vaccine_group_name: String
+}
+
+type VaccinesResponse {
+  schedule: [VaccinesSchedule!]
+  vaccine_group_name: String
+}
+
+type VaccinesSchedule {
+  medicine_brands: [String!]
+  medicine_name: String
+  range: Float
 }

@@ -119,7 +119,7 @@ export class UserEditInput {
 @InputType()
 export class SignInInput {
     @Field()
-    phone: number;
+    phone: string;
     @Field()
     password: string;
 }
@@ -139,9 +139,17 @@ export class SignInResponse {
     @Field()
     id: string;
     @Field()
-    phone: number;
+    phone: String;
     @Field()
     token: string;
+    @Field({ nullable: true })
+    created_at: string;
+    @Field({ nullable: true })
+    updated_at: String;
+    @Field({ nullable: true })
+    first_name: string;
+    @Field({ nullable: true })
+    last_name: string;
 }
 
 @ObjectType()

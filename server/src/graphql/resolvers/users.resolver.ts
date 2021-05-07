@@ -15,6 +15,7 @@ import { statusMessage } from "../../constants/message.constants";
 import { ApolloError } from "apollo-server-errors";
 import { comparingPassword, generateJWTAccessToken, hashingPassword, generateRandomNumber } from "../../helpers/common.helpers";
 import { sendSms } from "../../helpers/sms.helpers";
+import logger from "../../configuration/logger.configuration";
 
 @Resolver()
 export default class UserResolver {
@@ -34,10 +35,9 @@ export default class UserResolver {
     }
 
     @Mutation(() => SignInResponse)
-    async sigInUser(@Arg("signInInput") signInInput: SignInInput): Promise<SignInResponse> {
+    async sigInUser(@Arg("signInInput") signInInput: SignInInput): Promise<any> {
         try {
             const { phone, password } = signInInput;
-
             const user = await UserModel.findOne({ phone });
 
             if (!user) throw new ApolloError(statusMessage(422), "422");
@@ -52,8 +52,14 @@ export default class UserResolver {
                 id: user.id,
                 phone: user["phone"],
                 token: jwtAccessToken,
+                first_name: user["first_name"],
+                last_name: user["last_name"],
+                created_at: user["created_at"],
+                updated_at: user["updated_At"],
             };
         } catch (err) {
+            console.log(err.message);
+            logger.log(err.message);
             throw new ApolloError(err.message);
         }
     }
@@ -85,7 +91,7 @@ export default class UserResolver {
     }
 
     @Mutation(() => SendOtpResponse)
-    async sendOtpUserForgetPassword(@Arg("phone") phone: number): Promise<SendOtpResponse> {
+    async sendOtpUserForgetPassword(@Arg("phone", { nullable: true }) phone: number): Promise<SendOtpResponse> {
         try {
             const user = await UserModel.findOne({ phone });
 
@@ -197,7 +203,7 @@ export default class UserResolver {
     }
 
     @Mutation(() => String)
-    async deleteUser(@Arg("phone") phone: number): Promise<string> {
+    async deleteUser(@Arg("phone", { nullable: true }) phone: number): Promise<string> {
         try {
             const user = await UserModel.deleteOne({ phone });
             if (user.deletedCount < 1) throw new ApolloError(statusMessage(404), "404");
@@ -208,7 +214,7 @@ export default class UserResolver {
     }
 
     @Mutation(() => UserResponse)
-    async userActiveStatus(@Arg("phone") phone: number): Promise<UserResponse> {
+    async userActiveStatus(@Arg("phone", { nullable: true }) phone: number): Promise<UserResponse> {
         try {
             let user = await UserModel.findOne({ phone });
 

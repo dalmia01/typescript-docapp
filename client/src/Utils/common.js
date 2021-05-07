@@ -93,10 +93,10 @@ export const getPrescription = (prescription, patient) => {
 };
 
 export const getAPIBaseUrl = function () {
-    return process.env.NODE_ENV === "development" ? "http://localhost:5000" : window.location.origin;
+    return process.env.NODE_ENV === "development" ? "http://localhost:3004" : window.location.origin;
 };
 
-export const getPatienSerialId = (id) => id ? `PV${id}` : "";
+export const getPatienSerialId = (id) => (id ? `PV${id}` : "");
 
 export const getSexNotation = (sex) => {
     let sexNotation = "";
@@ -114,4 +114,4 @@ export const getSexNotation = (sex) => {
             sexNotation = "";
     }
     return sexNotation;
-}
+};

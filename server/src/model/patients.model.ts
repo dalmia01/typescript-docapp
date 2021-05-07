@@ -88,5 +88,5 @@ const PatientCounterSchema: Schema = new Schema({
     sequence_counter: { type: Number },
 });
 
-export const PatientModel = model("Patient", PatientSchema);
+export const PatientModel = model("patient", PatientSchema);
 export const PatientCounterModel = model("patientCounter", PatientCounterSchema);

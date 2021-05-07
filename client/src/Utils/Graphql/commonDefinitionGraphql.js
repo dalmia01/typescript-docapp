@@ -1,8 +1,10 @@
 import gql from "graphql-tag";
 
 const ADD_DEFINITION = gql`
-    mutation($id: String, $name: String, $fields: String, $category: String, $patient_id: String) {
-        defination: commonDefinition(id: $id, name: $name, fields: $fields, category: $category, patient_id: $patient_id) {
+    mutation commonDefinition($id: String, $name: String, $fields: String, $category: String, $patient_id: String) {
+        defination: commonDefinition(
+            commonDefinitonInput: { id: $id, name: $name, fields: $fields, category: $category, patient_id: $patient_id }
+        ) {
             id
             name
             category
@@ -21,7 +23,7 @@ const ADD_DEFINITION = gql`
 `;
 
 const UPDATE_DEFINITION = gql`
-    mutation($defination: String) {
+    mutation editCommonDefination($defination: String) {
         defination: editCommonDefination(defination: $defination) {
             id
             name
@@ -41,7 +43,7 @@ const UPDATE_DEFINITION = gql`
 `;
 
 const DELETE_DEFINITION_FIELD = gql`
-    mutation($defination: String) {
+    mutation deleteCommonDefinationField($defination: String) {
         defination: deleteCommonDefinationField(defination: $defination) {
             id
             name
@@ -61,8 +63,8 @@ const DELETE_DEFINITION_FIELD = gql`
 `;
 
 const SPECIFIC_DEFINITION = gql`
-    query($category: String, $id: String) {
-        defination: specificDefination(category: $category, id: $id) {
+    query specificDefination($category: String, $id: String) {
+        defination: specificDefination(specificDefintionInput: { category: $category, id: $id }) {
             id
             name
             category
@@ -82,8 +84,8 @@ const SPECIFIC_DEFINITION = gql`
 `;
 
 const FETCH_DEFINITIONS = gql`
-    query($category: String, $someId: String) {
-        definations: fetchDefinations(category: $category, someId: $someId) {
+    query fetchDefinations($category: String) {
+        definations: fetchDefinations(category: $category) {
             id
             name
             category
@@ -103,8 +105,10 @@ const FETCH_DEFINITIONS = gql`
 `;
 
 const FETCH_FILTERED_DEFINITIONS = gql`
-    query($category: String, $someId: String, $filteredValue: String) {
-        definations: fetchFilteredDefinations(category: $category, someId: $someId, filteredValue: $filteredValue) {
+    query fetchFilteredDefinations($category: String, $someId: String, $filteredValue: String) {
+        definations: fetchFilteredDefinations(
+            fetchFilterDefinitionInput: { category: $category, someId: $someId, filteredValue: $filteredValue }
+        ) {
             id
             name
             category
@@ -124,8 +128,8 @@ const FETCH_FILTERED_DEFINITIONS = gql`
 `;
 
 const ADD_DEFINITION_NAME = gql`
-    mutation($name: String, $category: String) {
-        defination: addDefinationName(name: $name, category: $category) {
+    mutation addDefinationName($name: String, $category: String) {
+        defination: addDefinationName(addDefinationNameInput: { name: $name, category: $category }) {
             id
             name
             category
@@ -144,26 +148,28 @@ const ADD_DEFINITION_NAME = gql`
 `;
 
 const DELETE_DEFINITION = gql`
-    mutation($name: String, $id: String) {
-        defination: deleteCommonDefination(name: $name, id: $id)
+    mutation deleteCommonDefination($id: String) {
+        defination: deleteCommonDefination(id: $id)
     }
 `;
 
 const FAVOURITE_MEDICINE_VALUES = gql`
-    mutation($defination: String) {
+    mutation favouriteMedicineValues($defination: String) {
         defination: favouriteMedicineValues(defination: $defination)
     }
 `;
 
 const REMOVE_FAVOURITE_MEDICINE_VALUES = gql`
-    mutation($definationID: String) {
+    mutation removeFavouriteMedicineValues($definationID: String) {
         defination: removeFavouriteMedicineValues(defination_id: $definationID)
     }
 `;
 
 const ADD_MEDICINE_MUTATION = gql`
-    mutation($name: String, $description: String, $dosageForm: String, $category: String) {
-        defination: addMedicineDefinationName(name: $name, description: $description, dosageForm: $dosageForm, category: $category) {
+    mutation addMedicineDefinationName($name: String, $description: String, $dosageForm: String, $category: String) {
+        defination: addMedicineDefinationName(
+            addMedicineDefinationInput: { name: $name, description: $description, dosageForm: $dosageForm, category: $category }
+        ) {
             id
             name
             category
@@ -182,8 +188,10 @@ const ADD_MEDICINE_MUTATION = gql`
 `;
 
 const EDIT_MEDICINE_MUTATION = gql`
-    mutation($name: String, $description: String, $dosageForm: String, $category: String) {
-        defination: editMedicineDefinationName(name: $name, description: $description, dosageForm: $dosageForm, category: $category) {
+    mutation editMedicineDefinationName($name: String, $description: String, $dosageForm: String, $category: String) {
+        defination: editMedicineDefinationName(
+            editCommonDefinitonInput: { name: $name, description: $description, dosageForm: $dosageForm, category: $category }
+        ) {
             id
             name
             category

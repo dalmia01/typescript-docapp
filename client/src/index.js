@@ -39,7 +39,7 @@ Sentry.init({
 const store = configureStore();
 
 const httpLink = createHttpLink({
-    uri: `${getAPIBaseUrl()}/graphql`,
+    uri: `http://localhost:3004/graphql`,
 });
 
 const defaultOptions = {

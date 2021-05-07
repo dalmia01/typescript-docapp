@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 const LOGIN_MUTATION = gql`
     mutation sigInUser($phone: String!, $password: String!) {
-        sigInUser(phone: $phone, password: $password) {
+        sigInUser(signInInput: { phone: $phone, password: $password }) {
             id
             first_name
             last_name

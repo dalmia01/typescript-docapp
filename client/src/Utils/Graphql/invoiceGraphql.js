@@ -1,8 +1,10 @@
 import gql from "graphql-tag";
 
 const FETCH_INVOICES = gql`
-    query($patient_id: String, $unique: String, $filter_criteria: String, $start: Date) {
-        invoices: fetchInvoices(patient_id: $patient_id, unique: $unique, filter_criteria: $filter_criteria, start: $start) {
+    query fetchInvoices($patient_id: String, $unique: String, $filter_criteria: String, $start: String) {
+        invoices: fetchInvoices(
+            fetchInvoiceInput: { patient_id: $patient_id, unique: $unique, filter_criteria: $filter_criteria, start: $start }
+        ) {
             serial_id
             patient_id {
                 first_name

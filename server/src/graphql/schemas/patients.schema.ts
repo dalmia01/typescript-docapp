@@ -25,6 +25,8 @@ export class AddressResponse {
 @ObjectType()
 export class BookingsResponse {
     @Field({ nullable: true })
+    id?: string;
+    @Field({ nullable: true })
     doctor_id?: string;
     @Field({ nullable: true })
     date?: string;
@@ -79,6 +81,8 @@ export class MedicalHistoryDataResponse {
 @ObjectType()
 export class MedicalHistoryResponse {
     @Field({ nullable: true })
+    id?: string;
+    @Field({ nullable: true })
     defination?: string;
     @Field({ nullable: true })
     name?: string;
@@ -130,6 +134,32 @@ export class PatientResponse {
     medical_history?: [MedicalHistoryResponse];
     @Field({ nullable: true })
     isTracked?: boolean;
+    @Field({ nullable: true })
+    updated_at?: string;
+    @Field({ nullable: true })
+    created_at?: string;
+}
+
+@ObjectType()
+export class PatientResponseVaccine {
+    @Field({ nullable: true })
+    id?: string;
+    @Field({ nullable: true })
+    updated_at?: string;
+    @Field({ nullable: true })
+    due_date?: string;
+    @Field({ nullable: true })
+    given_date?: string;
+    @Field({ nullable: true })
+    medicine_brand?: string;
+    @Field({ nullable: true })
+    medicine_name?: string;
+    @Field({ nullable: true })
+    notes?: string;
+    @Field({ nullable: true })
+    range?: number;
+    @Field({ nullable: true })
+    vaccine_group_name?: string;
 }
 
 @InputType()
@@ -234,4 +264,34 @@ export class VaccinePatientInput extends VaccineInput {
     id: string;
     @Field({ nullable: true })
     vaccine?: VaccineInput;
+}
+
+@InputType()
+export class PatientSendOtpBookingInput {
+    @Field({ nullable: true })
+    phone?: string;
+    @Field({ nullable: true })
+    first_name?: string;
+    @Field({ nullable: true })
+    last_name?: string;
+}
+
+@InputType()
+export class ConfirmPatientBookingInput {
+    @Field()
+    first_name: string;
+    @Field()
+    last_name: string;
+    @Field()
+    phone: string;
+    @Field()
+    hash: string;
+    @Field()
+    otp: string;
+    @Field()
+    doctor_id: string;
+    @Field({ nullable: true })
+    date?: string;
+    @Field({ nullable: true })
+    time?: string;
 }

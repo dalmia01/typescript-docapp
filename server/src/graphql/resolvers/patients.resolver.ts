@@ -11,6 +11,7 @@ import {
     FilterInputPatient,
     MedicalHistoryInput,
     PatientResponse,
+    PatientResponseVaccine,
 } from "../schemas/patients.schema";
 
 @Resolver()
@@ -28,7 +29,6 @@ export default class PatientResolver {
                         { phone: { $regex: new RegExp(name_phone, "i") } },
                     ],
                 });
-
                 return patients;
             }
 
@@ -54,7 +54,7 @@ export default class PatientResolver {
     }
 
     @Query(() => PatientResponse)
-    async getPatientMedia(@Arg("id") id: string): Promise<PatientResponse> {
+    async getPatientMedia(@Arg("id", { nullable: true }) id: string): Promise<PatientResponse> {
         try {
             const patient = await PatientModel.findById(id).select("id media");
 
@@ -67,14 +67,14 @@ export default class PatientResolver {
         }
     }
 
-    @Query(() => PatientResponse)
-    async vaccineChart(@Arg("id") id: string): Promise<PatientResponse> {
+    @Query(() => [PatientResponseVaccine])
+    async vaccineChart(@Arg("id", { nullable: true }) id?: string): Promise<PatientResponseVaccine[]> {
         try {
-            const patient = await PatientModel.findById(id).select("id vaccine");
+            const patient = await PatientModel.findById(id).select("vaccine");
 
             if (!patient) throw new Error(statusMessage(404));
 
-            return patient;
+            return [...patient["vaccine"]];
         } catch (err) {
             logger.log(err.message);
             throw new ApolloError(err.message);
@@ -197,7 +197,7 @@ export default class PatientResolver {
     }
 
     @Mutation(() => String)
-    async deletePatient(@Arg("id") id: string): Promise<string> {
+    async deletePatient(@Arg("id", { nullable: true }) id: string): Promise<string> {
         try {
             const findPatient = await PatientModel.findById(id);
             await findPatient.delete();
@@ -262,7 +262,7 @@ export default class PatientResolver {
     }
 
     @Mutation(() => String)
-    async updatePatientVaccineTrack(@Arg("id") id: string): Promise<string> {
+    async updatePatientVaccineTrack(@Arg("id", { nullable: true }) id: string): Promise<string> {
         try {
             const findPatient = await PatientModel.findById(id);
 

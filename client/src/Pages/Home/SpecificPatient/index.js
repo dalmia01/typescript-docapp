@@ -31,7 +31,7 @@ import VitalsModal from "../../../Components/Common/VitalsModal";
 import VitalsHomeTable from "../../../Components/Table/VitalsHomeTable";
 import history from "../../../Utils/history";
 import { routeConstants } from "../../../Utils/Constants/routeConstants";
-import {getPatienSerialId} from "../../../Utils/common";
+import { getPatienSerialId } from "../../../Utils/common";
 import ToolTip from "../../../Components/Common/ToolTip";
 
 import "./_index.scss";
@@ -47,7 +47,7 @@ const PAGE_VIEW_MODE = {
 const SpecificPatient = (props) => {
     let [active, setActive] = React.useState(0);
     let [activeInvoice, setActiveInvoice] = React.useState(0);
-    const { first_name, last_name, phone, age, address, sex, bookings, isTracked, patient_serial_id="" } = props.patient;
+    const { first_name, last_name, phone, age, address, sex, bookings, isTracked, patient_serial_id = "" } = props.patient;
 
     let mergedAddress = "";
 
@@ -107,8 +107,8 @@ const SpecificPatient = (props) => {
     // get all prescriptions for specific patient - graphql request to fetch all prescriptions of specific pateint
     const [getPrescription] = useLazyQuery(FETCH_PRESCRIPTIONS, {
         onCompleted(prescriptionData) {
-            props.setAllPrescriptions(prescriptionData.prescriptions);
-            if (prescriptionData.prescriptions.length > 0) {
+            prescriptionData && props.setAllPrescriptions(prescriptionData.prescriptions);
+            if (prescriptionData && prescriptionData.prescriptions.length > 0) {
                 props.setViewPrescription(prescriptionData.prescriptions[0]);
             } else {
                 props.setAllPrescriptions([]);
@@ -247,7 +247,8 @@ const SpecificPatient = (props) => {
                     </div>
                     <div className="widget-numbers p-name text-capitalize">{first_name + " " + last_name}</div>
                     <div className="widget-subheading">
-                        {patient_serial_id && `${getPatienSerialId(patient_serial_id)} | `}{age > -1 && age + " years  | "} {capitalize(sex)}
+                        {patient_serial_id && `${getPatienSerialId(patient_serial_id)} | `}
+                        {age > -1 && age + " years  | "} {capitalize(sex)}
                     </div>
                     <div className="widget-description p-details text-left">
                         <Table size="sm" className="mb-0">

@@ -8,7 +8,7 @@ import { Types } from "mongoose";
 @Resolver()
 export class ClinicsResolver {
     @Query(() => [ClinicResponse])
-    async fetchfilteredClinics(@Arg("filter") filter: string): Promise<ClinicResponse[]> {
+    async fetchfilteredClinics(@Arg("filter", { nullable: true }) filter: string): Promise<ClinicResponse[]> {
         try {
             const users = await ClinicsModel.find({
                 $or: [{ clinic_name: { $regex: new RegExp(filter, "i") } }, { address: { $regex: new RegExp(filter, "i") } }],
@@ -72,7 +72,7 @@ export class ClinicsResolver {
     }
 
     @Mutation(() => String)
-    async deleteClinic(@Arg("clinicId") clinicId: string): Promise<string> {
+    async deleteClinic(@Arg("clinicId", { nullable: true }) clinicId: string): Promise<string> {
         try {
             const deletedUsers = await ClinicsModel.findByIdAndDelete(Types.ObjectId(clinicId));
 

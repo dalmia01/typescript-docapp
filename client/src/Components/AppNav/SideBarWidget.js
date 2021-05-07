@@ -71,7 +71,7 @@ const Nav = (props) => {
         setSearchText(text);
         if (searchText && searchText.length > 2) {
             delayedHandleChange({
-                variables: { filter: JSON.stringify({ name_phone: searchText }) },
+                variables: { name_phone: searchText },
             });
         }
     };
@@ -130,12 +130,12 @@ const Nav = (props) => {
         let modifiedDate = getModifiedDate(date);
 
         setStartDate(date);
-        getData({ variables: { filter: JSON.stringify({ date: modifiedDate }) } });
+        getData({ variables: { date: modifiedDate } });
     };
 
     React.useEffect(() => {
         let modifiedDate = getModifiedDate(startDate);
-        getData({ variables: { filter: JSON.stringify({ date: modifiedDate }) } });
+        getData({ variables: { date: modifiedDate } });
     }, []);
 
     return (
@@ -160,9 +160,9 @@ const Nav = (props) => {
                                 className="tooltip-light"
                             >
                                 <i
-                                    class="lnr-sync"
+                                    className="lnr-sync"
                                     id="lnr-sync"
-                                    onClick={() => getData({ variables: { filter: JSON.stringify({ date: getModifiedDate(startDate) }) } })}
+                                    onClick={() => getData({ variables: { date: getModifiedDate(startDate) } })}
                                 ></i>
                             </ToolTip>
                         </Col>

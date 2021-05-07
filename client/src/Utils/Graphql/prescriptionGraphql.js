@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const FETCH_PRESCRIPTIONS = gql`
-    query($id: String, $unique: String) {
-        prescriptions: getPrescriptions(id: $id, unique: $unique) {
+    query getPrescriptions($id: String) {
+        prescriptions: getPrescriptions(getPrescriptionInput: { id: $id }) {
             id
             patient
             doctor {
@@ -12,7 +12,7 @@ export const FETCH_PRESCRIPTIONS = gql`
                 title
                 designation
             }
-            updated_at
+            updatedAt
             symptoms {
                 id
                 defination

@@ -3,7 +3,7 @@ import { statusMessage } from "../constants/message.constants";
 import { verifyJWTAccessToken } from "../helpers/common.helpers";
 
 export const verifyUser = async (req: any) => {
-    if (["sigInUser", "forgetUserPassword", "sendOtpUserForgetPassword"].indexOf(req.body.operationName) > -1) {
+    if (["sigInUser", "forgetUserPassword", "sendOtpUserForgetPassword", "createUser"].indexOf(req.body.operationName) > -1) {
         return;
     }
 
